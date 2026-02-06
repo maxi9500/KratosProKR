@@ -1,0 +1,11 @@
+{
+  "background_color": "#000000",
+  "dir": "ltr",
+  "display": "standalone",
+  "name": "KRATOS PRO",
+  "orientation": "any",
+  "scope": "/",
+  "short_name": "KRATOS PRO",
+  "start_url": "/",
+  "theme_color": "rgb(0, 0, 0)"
+}
