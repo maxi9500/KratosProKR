@@ -1,0 +1,1664 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <link rel="manifest" ...>.
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>KRATOS PRO ULTIMATE</title>
+    <style>
+        /* ═══════════════════════════════════════════════════════════════ */
+        /* DESIGN SYSTEM & VARIABLES */
+        /* ═══════════════════════════════════════════════════════════════ */
+        :root {
+            --bg-body: #050505;
+            --bg-card: #121212;
+            --bg-input: #1c1c1e;
+            --bg-overlay: rgba(5, 5, 5, 0.8);
+            --primary: #d4af37;
+            --primary-glow: rgba(212, 175, 55, 0.3);
+            --primary-dark: #9d8228;
+            --accent-1: #ff453a;
+            --accent-2: #32d74b;
+            --accent-3: #00c7ff;
+            --text-main: #f2f2f7;
+            --text-muted: #8e8e93;
+            --text-dimmed: #636366;
+            --border: #2c2c2e;
+            --border-light: #424245;
+            --radius-lg: 16px;
+            --radius-md: 12px;
+            --radius-sm: 8px;
+            --shadow-sm: 0 2px 8px rgba(0,0,0,0.4);
+            --shadow-md: 0 4px 16px rgba(0,0,0,0.5);
+            --shadow-lg: 0 8px 32px rgba(0,0,0,0.6);
+            --transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+            --font-main: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Helvetica Neue", sans-serif;
+            --font-mono: "SF Mono", Monaco, "Courier New", monospace;
+            --nav-height: 90px;
+        }
+
+        /* ═══════════════════════════════════════════════════════════════ */
+        /* RESET & BASE STYLES */
+        /* ═══════════════════════════════════════════════════════════════ */
+        * {
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+            outline: none;
+            -webkit-user-select: none;
+            user-select: none;
+        }
+
+        html, body {
+            margin: 0;
+            padding: 0;
+            background: var(--bg-body);
+            color: var(--text-main);
+            font-family: var(--font-main);
+            height: 100vh;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        input, textarea, button { -webkit-user-select: text; user-select: text; }
+
+        /* ═══════════════════════════════════════════════════════════════ */
+        /* LAYOUT STRUCTURE */
+        /* ═══════════════════════════════════════════════════════════════ */
+        .app-container {
+            flex: 1;
+            overflow-y: auto;
+            overflow-x: hidden;
+            padding-bottom: calc(var(--nav-height) + 20px);
+            scroll-behavior: smooth;
+            scrollbar-width: none;
+        }
+
+        .app-container::-webkit-scrollbar { display: none; }
+
+        /* Screen Transitions */
+        .screen {
+            display: none;
+            padding: 20px;
+            animation: screenFadeIn 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+            min-height: 100%;
+        }
+
+        .screen.active { display: block; }
+
+        @keyframes screenFadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(15px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* ═══════════════════════════════════════════════════════════════ */
+        /* COMPONENT: CARD */
+        /* ═══════════════════════════════════════════════════════════════ */
+        .card {
+            background: var(--bg-card);
+            border-radius: var(--radius-lg);
+            padding: 18px;
+            margin-bottom: 16px;
+            border: 1px solid var(--border);
+            box-shadow: var(--shadow-md);
+            backdrop-filter: blur(10px);
+            transition: var(--transition);
+        }
+
+        .card:hover {
+            border-color: var(--border-light);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .card.interactive {
+            cursor: pointer;
+            background: linear-gradient(135deg, var(--bg-card) 0%, rgba(212, 175, 55, 0.05) 100%);
+        }
+
+        .card.interactive:active {
+            transform: scale(0.98);
+        }
+
+        /* ═══════════════════════════════════════════════════════════════ */
+        /* COMPONENT: BUTTON */
+        /* ═══════════════════════════════════════════════════════════════ */
+        .btn {
+            border: none;
+            background: var(--bg-input);
+            color: var(--text-main);
+            padding: 14px 16px;
+            border-radius: var(--radius-md);
+            font-size: 0.95rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            font-family: var(--font-main);
+            border: 1px solid var(--border);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn:active {
+            transform: scale(0.95);
+            opacity: 0.85;
+        }
+
+        .btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        /* Button Variants */
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            color: #000;
+            border: none;
+            box-shadow: 0 0 20px var(--primary-glow);
+            font-weight: 700;
+        }
+
+        .btn-primary:active {
+            box-shadow: 0 0 30px var(--primary-glow);
+        }
+
+        .btn-secondary {
+            background: var(--bg-input);
+            border: 1.5px solid var(--border-light);
+        }
+
+        .btn-ghost {
+            background: transparent;
+            border: none;
+            color: var(--primary);
+            padding: 8px;
+        }
+
+        .btn-ghost:hover {
+            background: rgba(212, 175, 55, 0.1);
+        }
+
+        .btn-danger {
+            color: var(--accent-1);
+        }
+
+        .btn-success {
+            color: var(--accent-2);
+        }
+
+        /* Button Loading State */
+        .btn.loading {
+            pointer-events: none;
+            opacity: 0.7;
+        }
+
+        /* ═══════════════════════════════════════════════════════════════ */
+        /* COMPONENT: INPUT FIELD */
+        /* ═══════════════════════════════════════════════════════════════ */
+        input, textarea {
+            background: var(--bg-input);
+            border: 1px solid var(--border);
+            color: var(--text-main);
+            padding: 12px 14px;
+            border-radius: var(--radius-md);
+            font-size: 0.95rem;
+            font-family: var(--font-main);
+            transition: var(--transition);
+            width: 100%;
+        }
+
+        input::placeholder, textarea::placeholder {
+            color: var(--text-dimmed);
+        }
+
+        input:focus, textarea:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 2px var(--primary-glow);
+            background: rgba(28, 28, 30, 0.8);
+        }
+
+        /* Monospace Input for Numbers */
+        input[type="number"] {
+            font-family: var(--font-mono);
+            text-align: center;
+        }
+
+        /* ═══════════════════════════════════════════════════════════════ */
+        /* COMPONENT: TOP BAR */
+        /* ═══════════════════════════════════════════════════════════════ */
+        .top-bar {
+            padding: 12px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: var(--bg-body);
+            border-bottom: 1px solid var(--border);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            backdrop-filter: blur(20px);
+        }
+
+        .top-bar h1 {
+            font-size: 1.3rem;
+            color: var(--primary);
+            margin: 0;
+            letter-spacing: 2px;
+            font-weight: 800;
+        }
+
+        .top-bar-right {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        #session-timer {
+            font-family: var(--font-mono);
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--accent-3);
+            min-width: 50px;
+            text-align: right;
+        }
+
+        /* ═══════════════════════════════════════════════════════════════ */
+        /* COMPONENT: NAVIGATION BAR */
+        /* ═══════════════════════════════════════════════════════════════ */
+        .nav-bar {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            width: 100%;
+            height: var(--nav-height);
+            background: rgba(18, 18, 18, 0.95);
+            backdrop-filter: blur(30px);
+            border-top: 1px solid var(--border);
+            display: flex;
+            justify-content: space-around;
+            padding-top: 8px;
+            padding-bottom: max(8px, env(safe-area-inset-bottom));
+            z-index: 200;
+        }
+
+        .nav-item {
+            background: none;
+            border: none;
+            color: var(--text-dimmed);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            font-size: 0.65rem;
+            gap: 5px;
+            cursor: pointer;
+            transition: var(--transition);
+            flex: 1;
+            padding: 8px 0;
+            position: relative;
+        }
+
+        .nav-item.active {
+            color: var(--primary);
+        }
+
+        .nav-item svg {
+            width: 26px;
+            height: 26px;
+            fill: currentColor;
+            transition: var(--transition);
+        }
+
+        .nav-item.active svg {
+            filter: drop-shadow(0 0 8px var(--primary-glow));
+        }
+
+        /* ═══════════════════════════════════════════════════════════════ */
+        /* COMPONENT: WORKOUT GRID */
+        /* ═══════════════════════════════════════════════════════════════ */
+        .workout-exercise {
+            background: var(--bg-card);
+            border-radius: var(--radius-lg);
+            padding: 16px;
+            margin-bottom: 16px;
+            border: 1px solid var(--border);
+        }
+
+        .exercise-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 14px;
+            padding-bottom: 12px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .exercise-name {
+            font-weight: 700;
+            color: var(--primary);
+            font-size: 1rem;
+        }
+
+        .exercise-group {
+            font-size: 0.75rem;
+            color: var(--text-dimmed);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .set-table {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .set-header {
+            display: grid;
+            grid-template-columns: 35px 1fr 1fr 1fr 1fr 45px;
+            gap: 8px;
+            margin-bottom: 8px;
+            font-size: 0.7rem;
+            color: var(--text-muted);
+            text-align: center;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            padding: 0 8px;
+            font-weight: 700;
+        }
+
+        .set-row {
+            display: grid;
+            grid-template-columns: 35px 1fr 1fr 1fr 1fr 45px;
+            gap: 8px;
+            align-items: center;
+            padding: 8px;
+            background: rgba(212, 175, 55, 0.02);
+            border-radius: var(--radius-sm);
+            transition: var(--transition);
+        }
+
+        .set-row.completed {
+            background: rgba(50, 215, 75, 0.08);
+            border: 1px solid rgba(50, 215, 75, 0.2);
+        }
+
+        .set-row input {
+            text-align: center;
+            padding: 10px 6px;
+            font-family: var(--font-mono);
+            font-size: 0.9rem;
+            height: 40px;
+        }
+
+        .set-number {
+            text-align: center;
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            font-weight: 600;
+        }
+
+        .check-btn {
+            height: 40px;
+            width: 45px;
+            border-radius: var(--radius-sm);
+            background: var(--bg-input);
+            border: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            color: var(--text-dimmed);
+            font-size: 1.1rem;
+            transition: var(--transition);
+        }
+
+        .check-btn:active {
+            transform: scale(0.9);
+        }
+
+        .check-btn.done {
+            background: linear-gradient(135deg, var(--accent-2) 0%, #2fb84b 100%);
+            color: white;
+            border-color: var(--accent-2);
+            box-shadow: 0 0 12px rgba(50, 215, 75, 0.4);
+        }
+
+        /* Set Type Badge */
+        .set-type-badge {
+            display: inline-block;
+            font-size: 0.65rem;
+            padding: 4px 8px;
+            border-radius: 4px;
+            margin-left: 8px;
+            text-transform: uppercase;
+            font-weight: 700;
+            letter-spacing: 0.3px;
+        }
+
+        .set-type-badge.warmup {
+            background: rgba(100, 200, 255, 0.2);
+            color: #64c8ff;
+        }
+
+        .set-type-badge.working {
+            background: rgba(212, 175, 55, 0.2);
+            color: var(--primary);
+        }
+
+        .set-type-badge.dropset {
+            background: rgba(255, 69, 58, 0.2);
+            color: var(--accent-1);
+        }
+
+        .set-type-badge.failure {
+            background: rgba(255, 159, 64, 0.2);
+            color: #ff9f40;
+        }
+
+        /* ═══════════════════════════════════════════════════════════════ */
+        /* COMPONENT: FLOATING TIMER */
+        /* ═══════════════════════════════════════════════════════════════ */
+        .floating-timer {
+            position: fixed;
+            bottom: 110px;
+            right: 20px;
+            background: linear-gradient(135deg, #000 0%, rgba(0, 0, 0, 0.8) 100%);
+            border: 1.5px solid var(--primary);
+            border-radius: 50px;
+            padding: 12px 20px;
+            display: none;
+            align-items: center;
+            gap: 16px;
+            z-index: 150;
+            box-shadow: var(--shadow-lg);
+            backdrop-filter: blur(20px);
+            animation: timerPulse 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        @keyframes timerPulse {
+            from {
+                opacity: 0;
+                transform: scale(0.8);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        #rest-val {
+            font-weight: 700;
+            font-family: var(--font-mono);
+            font-size: 1.3rem;
+            color: var(--primary);
+            min-width: 60px;
+            text-align: right;
+        }
+
+        .timer-close-btn {
+            background: none;
+            border: none;
+            color: var(--text-main);
+            font-size: 1.5rem;
+            cursor: pointer;
+            padding: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: var(--transition);
+        }
+
+        .timer-close-btn:hover {
+            color: var(--accent-1);
+        }
+
+        /* ═══════════════════════════════════════════════════════════════ */
+        /* COMPONENT: MODAL OVERLAY */
+        /* ═══════════════════════════════════════════════════════════════ */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: var(--bg-overlay);
+            backdrop-filter: blur(4px);
+            z-index: 300;
+            animation: overlayFade 0.2s ease;
+        }
+
+        @keyframes overlayFade {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .modal-overlay.active { display: flex; }
+
+        .modal-content {
+            background: var(--bg-card);
+            border-radius: var(--radius-lg);
+            padding: 24px;
+            width: 90%;
+            max-height: 85vh;
+            overflow-y: auto;
+            box-shadow: var(--shadow-lg);
+            border: 1px solid var(--border);
+            animation: modalSlide 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        @keyframes modalSlide {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .modal-header {
+            font-size: 1.3rem;
+            font-weight: 800;
+            margin-bottom: 20px;
+            color: var(--primary);
+        }
+
+        .modal-close-btn {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: var(--bg-input);
+            border: none;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            color: var(--text-main);
+            cursor: pointer;
+            font-size: 1.2rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: var(--transition);
+        }
+
+        .modal-close-btn:hover {
+            background: var(--border);
+        }
+
+        /* ═══════════════════════════════════════════════════════════════ */
+        /* COMPONENT: SEARCH & FUZZY MATCH */
+        /* ═══════════════════════════════════════════════════════════════ */
+        .search-input {
+            width: 100%;
+            margin-bottom: 16px;
+        }
+
+        .exercise-list {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            max-height: 70vh;
+            overflow-y: auto;
+        }
+
+        .exercise-item {
+            background: var(--bg-input);
+            padding: 14px;
+            border-radius: var(--radius-md);
+            border: 1px solid var(--border);
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .exercise-item:hover {
+            background: rgba(212, 175, 55, 0.1);
+            border-color: var(--primary);
+        }
+
+        .exercise-item.highlight {
+            background: rgba(212, 175, 55, 0.15);
+            border-color: var(--primary);
+        }
+
+        .exercise-item-info {
+            flex: 1;
+        }
+
+        .exercise-item-name {
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+
+        .exercise-item-group {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+        }
+
+        /* ═══════════════════════════════════════════════════════════════ */
+        /* COMPONENT: STATS & CHARTS */
+        /* ═══════════════════════════════════════════════════════════════ */
+        .chart-container {
+            background: var(--bg-card);
+            border-radius: var(--radius-lg);
+            padding: 20px;
+            margin-bottom: 20px;
+            border: 1px solid var(--border);
+        }
+
+        .chart-title {
+            font-weight: 700;
+            margin-bottom: 16px;
+            color: var(--primary);
+        }
+
+        svg {
+            max-width: 100%;
+            height: auto;
+        }
+
+        /* ═══════════════════════════════════════════════════════════════ */
+        /* UTILITIES */
+        /* ═══════════════════════════════════════════════════════════════ */
+        .text-center { text-align: center; }
+        .text-muted { color: var(--text-muted); }
+        .text-dimmed { color: var(--text-dimmed); }
+        .text-danger { color: var(--accent-1); }
+        .text-success { color: var(--accent-2); }
+
+        .mt-lg { margin-top: 24px; }
+        .mt-md { margin-top: 16px; }
+        .mt-sm { margin-top: 8px; }
+        .mb-lg { margin-bottom: 24px; }
+        .mb-md { margin-bottom: 16px; }
+        .mb-sm { margin-bottom: 8px; }
+
+        .flex { display: flex; }
+        .flex-center { display: flex; align-items: center; justify-content: center; }
+        .flex-between { display: flex; align-items: center; justify-content: space-between; }
+        .gap-sm { gap: 8px; }
+        .gap-md { gap: 12px; }
+        .gap-lg { gap: 16px; }
+
+        .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+        .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+
+        .divider {
+            height: 1px;
+            background: var(--border);
+            margin: 16px 0;
+        }
+
+        /* ═══════════════════════════════════════════════════════════════ */
+        /* RESPONSIVE */
+        /* ═══════════════════════════════════════════════════════════════ */
+        @media (max-width: 480px) {
+            .set-header, .set-row {
+                grid-template-columns: 30px 1fr 1fr 35px;
+            }
+            .grid-2 { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="top-bar">
+    <h1>⚡ KRATOS</h1>
+    <div class="top-bar-right">
+        <div id="session-timer" style="display: none;">00:00</div>
+    </div>
+</div>
+
+<div class="app-container">
+    <!-- ════════════════════════ SCREEN: HOME ════════════════════════ -->
+    <div id="screen-home" class="screen active">
+        <div style="margin-bottom: 20px;">
+            <h2 style="margin: 0 0 16px 0; font-size: 1.1rem; letter-spacing: 0.5px;">ПРОГРАММЫ</h2>
+            <div id="plans-container"></div>
+            <button class="btn btn-secondary" style="width: 100%; border: 2px dashed var(--border);" onclick="UI.createPlan()">
+                + НОВАЯ ПРОГРАММА
+            </button>
+        </div>
+
+        <div class="divider"></div>
+
+        <div>
+            <h2 style="margin: 16px 0; font-size: 1.1rem; letter-spacing: 0.5px;">БЫСТРЫЙ СТАРТ</h2>
+            <div class="card interactive" onclick="State.startWorkout()">
+                <div style="font-weight: 700; margin-bottom: 8px;">Свободная тренировка</div>
+                <div style="font-size: 0.8rem; color: var(--text-muted);">Без шаблона программы</div>
+            </div>
+        </div>
+
+        <div style="margin-top: 24px;">
+            <h2 style="margin: 16px 0; font-size: 1.1rem; letter-spacing: 0.5px;">ПОСЛЕДНИЕ ТРЕНИРОВКИ</h2>
+            <div id="history-list"></div>
+        </div>
+    </div>
+
+    <!-- ════════════════════════ SCREEN: WORKOUT ════════════════════════ -->
+    <div id="screen-workout" class="screen">
+        <input type="text" id="workout-title" style="font-size: 1.4rem; font-weight: 800; border: none; background: none; padding: 0; margin-bottom: 20px; color: var(--primary);" placeholder="Название тренировки">
+
+        <div id="workout-exercises"></div>
+
+        <div class="grid-2 mt-lg" style="position: relative; z-index: 50;">
+            <button class="btn btn-secondary" onclick="UI.showExerciseSelector()">+ УПРАЖНЕНИЕ</button>
+            <button class="btn btn-primary" onclick="State.finishWorkout()">ЗАВЕРШИТЬ</button>
+        </div>
+        <button class="btn btn-ghost text-danger" style="width: 100%; margin-top: 12px;" onclick="State.cancelWorkout()">Отменить тренировку</button>
+    </div>
+
+    <!-- ════════════════════════ SCREEN: STATS ════════════════════════ -->
+    <div id="screen-stats" class="screen">
+        <h2>АНАЛИЗ & ПРОГРЕСС</h2>
+
+        <div class="chart-container">
+            <div class="chart-title">Прогресс по упражнениям</div>
+            <div id="stats-chart" style="height: 300px;"></div>
+        </div>
+
+        <div class="chart-container">
+            <div class="chart-title">Расчет 1RM (одноповторный максимум)</div>
+            <div id="1rm-calculator"></div>
+        </div>
+
+        <div class="chart-container">
+            <div class="chart-title">Объем нагрузки (по дням)</div>
+            <div id="volume-chart" style="height: 280px;"></div>
+        </div>
+
+        <div class="chart-container">
+            <div class="chart-title">Календарь активности</div>
+            <div id="activity-calendar"></div>
+        </div>
+    </div>
+
+    <!-- ════════════════════════ SCREEN: SETTINGS ════════════════════════ -->
+    <div id="screen-settings" class="screen">
+        <h2>ОПЦИИ И ПАРАМЕТРЫ</h2>
+
+        <div class="card">
+            <div style="font-weight: 700; margin-bottom: 12px;">Стандартный отдых между подходами</div>
+            <input type="number" id="rest-default" min="15" max="300" step="15" value="90" style="text-align: center;">
+            <div style="font-size: 0.75rem; color: var(--text-muted); margin-top: 8px;">Секунды</div>
+        </div>
+
+        <div class="card">
+            <div style="font-weight: 700; margin-bottom: 12px;">Об приложении</div>
+            <div style="font-size: 0.9rem; color: var(--text-muted);">
+                <div>KRATOS PRO ULTIMATE v2.0</div>
+                <div style="margin-top: 8px;">Профессиональное приложение для отслеживания тренировок.</div>
+                <div style="margin-top: 12px; font-size: 0.75rem;">© 2026 | Maxim Kalinichenko (@max95uakr) Авторские права защищены: ст. 433 ГК Украины, ЗУ №2811-IX. 
+        </div>
+            </div>
+        </div>
+
+        <button class="btn btn-ghost text-danger" style="width: 100%; margin-top: 20px;" onclick="State.clearAllData()">
+            🗑️ ОЧИСТИТЬ ВСЕ ДАННЫЕ
+        </button>
+    </div>
+</div>
+
+<!-- ════════════════════════ MODAL: EXERCISE SELECTOR ════════════════════════ -->
+<div id="modal-exercise-selector" class="modal-overlay">
+    <div class="modal-content">
+        <div class="modal-header">ВЫБОР УПРАЖНЕНИЯ</div>
+        <button class="modal-close-btn" onclick="UI.hideModal('modal-exercise-selector')">×</button>
+        <input type="text" id="exercise-search" class="search-input" placeholder="Поиск упражнения (например: жим, приседания)...">
+        <div class="exercise-list" id="exercise-list"></div>
+    </div>
+</div>
+
+<!-- ════════════════════════ MODAL: SET TYPE SELECTOR ════════════════════════ -->
+<div id="modal-set-type" class="modal-overlay">
+    <div class="modal-content">
+        <div class="modal-header">ТИП ПОДХОДА</div>
+        <button class="modal-close-btn" onclick="UI.hideModal('modal-set-type')">×</button>
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
+            <button class="btn btn-secondary" style="padding: 16px; justify-content: center; flex-direction: column; height: 100px;" onclick="State.selectSetType('warmup')">
+                <div style="color: #64c8ff; font-weight: 700;">РАЗМИНКА</div>
+                <div style="font-size: 0.75rem; color: var(--text-muted);">Легкий разминочный подход</div>
+            </button>
+            <button class="btn btn-secondary" style="padding: 16px; justify-content: center; flex-direction: column; height: 100px;" onclick="State.selectSetType('working')">
+                <div style="color: var(--primary); font-weight: 700;">РАБОЧИЙ</div>
+                <div style="font-size: 0.75rem; color: var(--text-muted);">Основной силовой подход</div>
+            </button>
+            <button class="btn btn-secondary" style="padding: 16px; justify-content: center; flex-direction: column; height: 100px;" onclick="State.selectSetType('dropset')">
+                <div style="color: var(--accent-1); font-weight: 700;">ДРОП-СЕТ</div>
+                <div style="font-size: 0.75rem; color: var(--text-muted);">Снижение веса без отдыха</div>
+            </button>
+            <button class="btn btn-secondary" style="padding: 16px; justify-content: center; flex-direction: column; height: 100px;" onclick="State.selectSetType('failure')">
+                <div style="color: #ff9f40; font-weight: 700;">ДО ОТКАЗА</div>
+                <div style="font-size: 0.75rem; color: var(--text-muted);">Максимальное напряжение мышц</div>
+            </button>
+        </div>
+    </div>
+</div>
+
+<!-- ════════════════════════ FLOATING TIMER ════════════════════════ -->
+<div class="floating-timer" id="rest-timer">
+    <span style="font-size: 1.2rem; opacity: 0.8;">⏳</span>
+    <span id="rest-val">00:00</span>
+    <button class="timer-close-btn" onclick="Timer.stopRest()">×</button>
+</div>
+
+<!-- ════════════════════════ NAVIGATION ════════════════════════ -->
+<nav class="nav-bar">
+    <button class="nav-item active" onclick="Router.go('screen-home')">
+        <svg viewBox="0 0 24 24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>
+        ГЛАВНАЯ
+    </button>
+    <button class="nav-item" onclick="Router.go('screen-stats')">
+        <svg viewBox="0 0 24 24"><path d="M5 9.2h3V19H5zM10.6 5h2.8v14h-2.8zm5.6 8H19v6h-2.8z"/></svg>
+        АНАЛИЗ
+    </button>
+    <button class="nav-item" onclick="Router.go('screen-settings')">
+        <svg viewBox="0 0 24 24"><path d="M12 15.5a3.5 3.5 0 1 1 0-7 3.5 3.5 0 0 1 0 7zm7.4-5.6l2.3-1.8-2.1-3.7-2.8 1.1c-.5-.4-1.1-.7-1.7-.9L14.7 2h-4.2l-.4 2.6c-.6.2-1.2.5-1.7.9L5.6 4.4 3.5 8.1l2.3 1.8c0 .3-.1.6-.1.9s.1.6.1.9l-2.3 1.8 2.1 3.7 2.8-1.1c.5.4 1.1.7 1.7.9l.4 2.6h4.2l.4-2.6c.6-.2 1.2-.5 1.7-.9l2.8 1.1 2.1-3.7-2.3-1.8c0-.3.1-.6.1-.9s-.1-.6-.1-.9z"/></svg>
+        ОПЦИИ
+    </button>
+</nav>
+
+<script>
+/**
+ * ═══════════════════════════════════════════════════════════════════════════
+ * KRATOS PRO ULTIMATE - v2.0
+ * Профессиональное приложение для отслеживания тренировок
+ * Архитектура: Модульная | State Management | ES6+
+ * ═══════════════════════════════════════════════════════════════════════════
+ */
+
+/* ═════════════════════════════════════════════════════════════════════════ */
+/* STATE MANAGEMENT - Redux-подобная система управления состоянием */
+/* ═════════════════════════════════════════════════════════════════════════ */
+
+const Store = (() => {
+    const STORAGE_KEY = 'KRATOS_DB_V2';
+    const DEFAULT_STATE = {
+        plans: [],
+        history: [],
+        currentWorkout: null,
+        exercises: [
+            // CHEST
+            { id: 'e1', name: 'Жим штанги лежа', group: 'Грудь' },
+            { id: 'e2', name: 'Жим гантелей лежа', group: 'Грудь' },
+            { id: 'e3', name: 'Отжимания на брусьях', group: 'Грудь' },
+            // BACK
+            { id: 'e4', name: 'Тяга штанги в наклоне', group: 'Спина' },
+            { id: 'e5', name: 'Подтягивания', group: 'Спина' },
+            { id: 'e6', name: 'Тяга верхнего блока', group: 'Спина' },
+            // LEGS
+            { id: 'e7', name: 'Приседания со штангой', group: 'Ноги' },
+            { id: 'e8', name: 'Жим ногами', group: 'Ноги' },
+            { id: 'e9', name: 'Мертвая тяга', group: 'Ноги' },
+            // SHOULDERS
+            { id: 'e10', name: 'Жим штанги стоя', group: 'Плечи' },
+            { id: 'e11', name: 'Разведение гантелей в стороны', group: 'Плечи' },
+            // ARMS
+            { id: 'e12', name: 'Подъем штанги на бицепс', group: 'Руки' },
+            { id: 'e13', name: 'Разгибание рук на трицепс', group: 'Руки' },
+        ],
+        settings: {
+            restDefault: 90,
+            theme: 'dark',
+            language: 'ru'
+        }
+    };
+
+    let state = (() => {
+        try {
+            const stored = localStorage.getItem(STORAGE_KEY);
+            return stored ? JSON.parse(stored) : { ...DEFAULT_STATE };
+        } catch (e) {
+            console.error('Store load error:', e);
+            return { ...DEFAULT_STATE };
+        }
+    })();
+
+    return {
+        // Getters
+        getState: () => ({ ...state }),
+        getPlan: (id) => state.plans.find(p => p.id === id),
+        getExercise: (id) => state.exercises.find(e => e.id === id),
+        getWorkout: () => state.currentWorkout,
+        getHistory: () => [...state.history],
+        getSettings: () => ({ ...state.settings }),
+        getExercises: () => [...state.exercises],
+
+        // Actions
+        addPlan: (plan) => {
+            const newPlan = { ...plan, id: Date.now().toString() };
+            state.plans.push(newPlan);
+            Store.save();
+            return newPlan;
+        },
+
+        updatePlan: (id, updates) => {
+            const plan = state.plans.find(p => p.id === id);
+            if (plan) {
+                Object.assign(plan, updates);
+                Store.save();
+            }
+        },
+
+        setCurrentWorkout: (workout) => {
+            state.currentWorkout = workout;
+            Store.save();
+        },
+
+        updateCurrentWorkout: (updates) => {
+            if (state.currentWorkout) {
+                Object.assign(state.currentWorkout, updates);
+                Store.save();
+            }
+        },
+
+        finishWorkout: () => {
+            if (state.currentWorkout) {
+                state.currentWorkout.end = Date.now();
+                state.history.push({ ...state.currentWorkout });
+                state.currentWorkout = null;
+                Store.save();
+            }
+        },
+
+        cancelWorkout: () => {
+            state.currentWorkout = null;
+            Store.save();
+        },
+
+        updateSettings: (settings) => {
+            state.settings = { ...state.settings, ...settings };
+            Store.save();
+        },
+
+        clearAllData: () => {
+            if (confirm('⚠️ ОЧИСТИТЬ ВСЕ ДАННЫЕ? Это действие необратимо!')) {
+                state = { ...DEFAULT_STATE };
+                localStorage.removeItem(STORAGE_KEY);
+                Store.save();
+                location.reload();
+            }
+        },
+
+        save: () => {
+            try {
+                localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+            } catch (e) {
+                console.error('Store save error:', e);
+            }
+        }
+    };
+})();
+
+/* ═════════════════════════════════════════════════════════════════════════ */
+/* UTILITIES: Валидация, Fuzzy Search, Формулы */
+/* ═════════════════════════════════════════════════════════════════════════ */
+
+const Utils = {
+    // Валидация
+    validateWeight: (w) => {
+        const num = parseFloat(w);
+        return !isNaN(num) && num > 0 && num < 500 ? num : null;
+    },
+
+    validateReps: (r) => {
+        const num = parseInt(r, 10);
+        return !isNaN(num) && num > 0 && num < 100 ? num : null;
+    },
+
+    validateRPE: (rpe) => {
+        const num = parseFloat(rpe);
+        return !isNaN(num) && num >= 1 && num <= 10 ? num : null;
+    },
+
+    // Fuzzy Search
+    fuzzySearch: (query, items, getLabel) => {
+        if (!query) return items;
+        const q = query.toLowerCase();
+        return items
+            .map(item => {
+                const label = getLabel(item).toLowerCase();
+                let score = 0;
+                let matched = 0;
+
+                for (let i = 0, j = 0; i < q.length; i++) {
+                    while (j < label.length && label[j] !== q[i]) j++;
+                    if (j < label.length) {
+                        matched++;
+                        score += Math.pow(0.5, j - i);
+                        j++;
+                    }
+                }
+
+                return {
+                    item,
+                    score: matched === q.length ? score : -1
+                };
+            })
+            .filter(r => r.score > 0)
+            .sort((a, b) => b.score - a.score)
+            .map(r => r.item);
+    },
+
+    // Формулы расчета 1RM
+    calc1RM: {
+        epley: (weight, reps) => weight * (1 + reps / 30),
+        brzycki: (weight, reps) => weight * 36 / (37 - reps),
+        lander: (weight, reps) => (100 * weight) / (101.3 - 2.67123 * reps),
+        mayhew: (weight, reps) => (100 * weight) / (52.2 + 41.9 * Math.exp(-0.055 * reps))
+    },
+
+    format1RM: (w, r, formula = 'epley') => {
+        if (!w || !r || r >= 30) return null;
+        const calc = Utils.calc1RM[formula];
+        return calc ? Math.round(calc(w, r)) : null;
+    },
+
+    // Форматирование времени
+    formatTime: (ms) => {
+        const sec = Math.floor(ms / 1000);
+        const min = Math.floor(sec / 60);
+        const s = sec % 60;
+        return `${String(min).padStart(2, '0')}:${String(s).padStart(2, '0')}`;
+    },
+
+    // Форматирование даты
+    formatDate: (date) => {
+        if (typeof date === 'number') date = new Date(date);
+        return new Intl.DateTimeFormat('ru-RU', {
+            month: 'short',
+            day: 'numeric',
+            hour: '2-digit',
+            minute: '2-digit'
+        }).format(date);
+    },
+
+    // Haptic Feedback API
+    haptic: (type = 'light') => {
+        if (window.navigator && window.navigator.vibrate) {
+            const patterns = {
+                light: [20],
+                medium: [50],
+                heavy: [100],
+                success: [50, 30, 50],
+                error: [100, 50, 100],
+                warning: [30, 50, 30]
+            };
+            window.navigator.vibrate(patterns[type] || patterns.light);
+        }
+    }
+};
+
+/* ═════════════════════════════════════════════════════════════════════════ */
+/* UI MANAGEMENT */
+/* ═════════════════════════════════════════════════════════════════════════ */
+
+const UI = {
+    showModal: (modalId) => {
+        const modal = document.getElementById(modalId);
+        if (modal) {
+            modal.classList.add('active');
+            Utils.haptic('light');
+        }
+    },
+
+    hideModal: (modalId) => {
+        const modal = document.getElementById(modalId);
+        if (modal) {
+            modal.classList.remove('active');
+        }
+    },
+
+    showExerciseSelector: () => {
+        const exercises = Store.getExercises();
+        const list = document.getElementById('exercise-list');
+        const searchInput = document.getElementById('exercise-search');
+
+        const renderList = (items) => {
+            list.innerHTML = items.map(ex => `
+                <div class="exercise-item" onclick="State.addExerciseToWorkout('${ex.id}'); UI.hideModal('modal-exercise-selector')">
+                    <div class="exercise-item-info">
+                        <div class="exercise-item-name">${ex.name}</div>
+                        <div class="exercise-item-group">${ex.group}</div>
+                    </div>
+                    <span style="color: var(--text-muted); font-size: 0.8rem;">→</span>
+                </div>
+            `).join('');
+        };
+
+        renderList(exercises);
+        searchInput.value = '';
+        searchInput.oninput = (e) => {
+            const filtered = Utils.fuzzySearch(e.target.value, exercises, ex => ex.name);
+            renderList(filtered);
+        };
+
+        UI.showModal('modal-exercise-selector');
+        setTimeout(() => searchInput.focus(), 100);
+    },
+
+    createPlan: () => {
+        const name = prompt('Название программы:');
+        if (name && name.trim()) {
+            Store.addPlan({
+                name: name.trim(),
+                exs: [],
+                createdAt: Date.now()
+            });
+            State.renderHome();
+            Utils.haptic('success');
+        }
+    },
+
+    renderExerciseList: () => {
+        const workout = Store.getWorkout();
+        if (!workout) return;
+
+        const container = document.getElementById('workout-exercises');
+        container.innerHTML = workout.exercises.map((ex, exIdx) => {
+            const exData = Store.getExercise(ex.id);
+            return `
+                <div class="workout-exercise">
+                    <div class="exercise-header">
+                        <div>
+                            <div class="exercise-name">${exData.name}</div>
+                            <div class="exercise-group">${exData.group}</div>
+                        </div>
+                        <button class="btn btn-ghost" onclick="State.removeExerciseFromWorkout(${exIdx})" style="color: var(--accent-1);">
+                            ✕
+                        </button>
+                    </div>
+                    <div class="set-table">
+                        <div class="set-header">
+                            <div>СЕТ</div>
+                            <div>КГ</div>
+                            <div>ПОВ</div>
+                            <div>RPE</div>
+                            <div></div>
+                        </div>
+                        ${ex.sets.map((set, setIdx) => `
+                            <div class="set-row ${set.done ? 'completed' : ''}">
+                                <div class="set-number">${setIdx + 1}</div>
+                                <input type="number" placeholder="0" value="${set.weight || ''}" 
+                                    oninput="State.updateSet(${exIdx}, ${setIdx}, 'weight', this.value)" 
+                                    min="0" max="500" step="0.5">
+                                <input type="number" placeholder="0" value="${set.reps || ''}" 
+                                    oninput="State.updateSet(${exIdx}, ${setIdx}, 'reps', this.value)" 
+                                    min="0" max="100" step="1">
+                                <input type="number" placeholder="6-10" value="${set.rpe || ''}" 
+                                    oninput="State.updateSet(${exIdx}, ${setIdx}, 'rpe', this.value)" 
+                                    min="1" max="10" step="0.5">
+                                <div class="check-btn ${set.done ? 'done' : ''}" 
+                                    onclick="State.toggleSetComplete(${exIdx}, ${setIdx})">
+                                    ✓
+                                </div>
+                            </div>
+                        `).join('')}
+                        <button class="btn btn-ghost" style="width: 100%; margin-top: 10px; border-top: 1px solid var(--border); padding-top: 12px;" 
+                            onclick="State.addSetToExercise(${exIdx})">
+                            + ПОДХОД
+                        </button>
+                    </div>
+                </div>
+            `;
+        }).join('');
+    }
+};
+
+/* ═════════════════════════════════════════════════════════════════════════ */
+/* STATE & WORKOUT LOGIC */
+/* ═════════════════════════════════════════════════════════════════════════ */
+
+const State = {
+    startWorkout: (planId = null) => {
+        const plan = planId ? Store.getPlan(planId) : null;
+        const workout = {
+            id: Date.now().toString(),
+            name: plan ? plan.name : 'Свободная тренировка',
+            exercises: plan ? plan.exs.map(exId => ({
+                id: exId,
+                sets: [{ weight: '', reps: '', rpe: '', done: false }]
+            })) : [],
+            startTime: Date.now(),
+            endTime: null
+        };
+
+        Store.setCurrentWorkout(workout);
+        Workout.init();
+        Router.go('screen-workout');
+        Utils.haptic('medium');
+    },
+
+    addExerciseToWorkout: (exId) => {
+        const workout = Store.getWorkout();
+        if (workout) {
+            workout.exercises.push({
+                id: exId,
+                sets: [{ weight: '', reps: '', rpe: '', done: false }]
+            });
+            Store.updateCurrentWorkout({ exercises: workout.exercises });
+            UI.renderExerciseList();
+            Utils.haptic('success');
+        }
+    },
+
+    removeExerciseFromWorkout: (exIdx) => {
+        const workout = Store.getWorkout();
+        if (workout) {
+            workout.exercises.splice(exIdx, 1);
+            Store.updateCurrentWorkout({ exercises: workout.exercises });
+            UI.renderExerciseList();
+            Utils.haptic('warning');
+        }
+    },
+
+    addSetToExercise: (exIdx) => {
+        const workout = Store.getWorkout();
+        if (workout && workout.exercises[exIdx]) {
+            const lastSet = workout.exercises[exIdx].sets[workout.exercises[exIdx].sets.length - 1];
+            workout.exercises[exIdx].sets.push({
+                weight: lastSet.weight,
+                reps: lastSet.reps,
+                rpe: '',
+                done: false
+            });
+            Store.updateCurrentWorkout({ exercises: workout.exercises });
+            UI.renderExerciseList();
+            Utils.haptic('light');
+        }
+    },
+
+    updateSet: (exIdx, setIdx, field, value) => {
+        const workout = Store.getWorkout();
+        if (workout && workout.exercises[exIdx] && workout.exercises[exIdx].sets[setIdx]) {
+            // Валидация
+            if (field === 'weight') {
+                const validated = Utils.validateWeight(value);
+                if (validated !== null) workout.exercises[exIdx].sets[setIdx].weight = validated;
+                if (value === '') workout.exercises[exIdx].sets[setIdx].weight = '';
+            } else if (field === 'reps') {
+                const validated = Utils.validateReps(value);
+                if (validated !== null) workout.exercises[exIdx].sets[setIdx].reps = validated;
+                if (value === '') workout.exercises[exIdx].sets[setIdx].reps = '';
+            } else if (field === 'rpe') {
+                const validated = Utils.validateRPE(value);
+                if (validated !== null) workout.exercises[exIdx].sets[setIdx].rpe = validated;
+                if (value === '') workout.exercises[exIdx].sets[setIdx].rpe = '';
+            }
+            Store.updateCurrentWorkout({ exercises: workout.exercises });
+        }
+    },
+
+    toggleSetComplete: (exIdx, setIdx) => {
+        const workout = Store.getWorkout();
+        if (workout && workout.exercises[exIdx] && workout.exercises[exIdx].sets[setIdx]) {
+            const set = workout.exercises[exIdx].sets[setIdx];
+            set.done = !set.done;
+            Store.updateCurrentWorkout({ exercises: workout.exercises });
+
+            if (set.done) {
+                Timer.startRest(Store.getSettings().restDefault);
+                Utils.haptic('success');
+            } else {
+                Timer.stopRest();
+                Utils.haptic('warning');
+            }
+            UI.renderExerciseList();
+        }
+    },
+
+    finishWorkout: () => {
+        const workout = Store.getWorkout();
+        if (!workout) return;
+
+        if (confirm('✓ Завершить тренировку?')) {
+            Store.finishWorkout();
+            Utils.haptic('success');
+            Router.go('screen-home');
+            State.renderHome();
+        }
+    },
+
+    cancelWorkout: () => {
+        if (confirm('⚠️ Отменить тренировку?')) {
+            Store.cancelWorkout();
+            Utils.haptic('warning');
+            Router.go('screen-home');
+            State.renderHome();
+        }
+    },
+
+    selectSetType: (type) => {
+        // Резервируется для будущей функции выбора типа подхода
+        UI.hideModal('modal-set-type');
+    },
+
+    renderHome: () => {
+        const plansDiv = document.getElementById('plans-container');
+        const plans = Store.getState().plans;
+
+        if (plans.length === 0) {
+            plansDiv.innerHTML = `
+                <div style="text-align: center; padding: 20px; color: var(--text-muted); font-size: 0.9rem;">
+                    У вас пока нет программ
+                </div>
+            `;
+        } else {
+            plansDiv.innerHTML = plans.map(plan => `
+                <div class="card interactive" onclick="State.startWorkout('${plan.id}')">
+                    <div style="font-weight: 700; margin-bottom: 4px;">${plan.name}</div>
+                    <div style="font-size: 0.8rem; color: var(--text-muted);">${plan.exs.length} упражнений</div>
+                </div>
+            `).join('');
+        }
+
+        const historyDiv = document.getElementById('history-list');
+        const history = Store.getHistory().slice(-5).reverse();
+
+        if (history.length === 0) {
+            historyDiv.innerHTML = `
+                <div style="text-align: center; padding: 20px; color: var(--text-muted); font-size: 0.9rem;">
+                    История тренировок пуста
+                </div>
+            `;
+        } else {
+            historyDiv.innerHTML = history.map(workout => {
+                const duration = (workout.endTime - workout.startTime) / 1000 / 60;
+                return `
+                    <div class="card">
+                        <div style="font-weight: 700; color: var(--primary); margin-bottom: 4px;">${workout.name}</div>
+                        <div style="font-size: 0.8rem; color: var(--text-muted);">
+                            ${Utils.formatDate(workout.startTime)} • ${Math.round(duration)} мин • ${workout.exercises.length} упр.
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+    },
+
+    renderStats: () => {
+        const history = Store.getHistory();
+        
+        // 1RM Calculator UI
+        const calc1rmDiv = document.getElementById('1rm-calculator');
+        calc1rmDiv.innerHTML = `
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 12px;">
+                <input type="number" id="calc-weight" placeholder="Вес (кг)" min="0" step="0.5">
+                <input type="number" id="calc-reps" placeholder="Повторения" min="1" max="30" step="1">
+            </div>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px;">
+                <div style="background: var(--bg-input); padding: 12px; border-radius: var(--radius-md); text-align: center;">
+                    <div style="font-size: 0.75rem; color: var(--text-muted); margin-bottom: 4px;">Эпли</div>
+                    <div id="1rm-epley" style="font-size: 1.2rem; font-weight: 700; color: var(--primary);">—</div>
+                </div>
+                <div style="background: var(--bg-input); padding: 12px; border-radius: var(--radius-md); text-align: center;">
+                    <div style="font-size: 0.75rem; color: var(--text-muted); margin-bottom: 4px;">Бржики</div>
+                    <div id="1rm-brzycki" style="font-size: 1.2rem; font-weight: 700; color: var(--accent-3);">—</div>
+                </div>
+            </div>
+        `;
+
+        document.getElementById('calc-weight').oninput = State.calculate1RM;
+        document.getElementById('calc-reps').oninput = State.calculate1RM;
+
+        // Chart: Volume Over Time
+        const volumeChart = document.getElementById('volume-chart');
+        if (history.length > 0) {
+            const volumeByDay = {};
+            history.forEach(w => {
+                const day = new Date(w.startTime).toLocaleDateString();
+                volumeByDay[day] = (volumeByDay[day] || 0) + 
+                    w.exercises.reduce((sum, ex) => sum + 
+                        ex.sets.reduce((s, set) => s + ((set.weight || 0) * (set.reps || 0)), 0), 0);
+            });
+
+            const days = Object.keys(volumeByDay).slice(-7);
+            const volumes = days.map(d => Math.round(volumeByDay[d]));
+            const maxVolume = Math.max(...volumes, 1);
+
+            volumeChart.innerHTML = `
+                <svg viewBox="0 0 100 60" preserveAspectRatio="xMidYMid meet" style="width: 100%; height: 100%;">
+                    <defs>
+                        <linearGradient id="volumeGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+                            <stop offset="0%" style="stop-color:rgba(212, 175, 55, 0.5);stop-opacity:1" />
+                            <stop offset="100%" style="stop-color:rgba(212, 175, 55, 0.1);stop-opacity:1" />
+                        </linearGradient>
+                    </defs>
+                    ${volumes.map((v, i) => {
+                        const x = (i / (volumes.length - 1 || 1)) * 100;
+                        const h = (v / maxVolume) * 50;
+                        return `<rect x="${x - 2.5}" y="${60 - h}" width="5" height="${h}" fill="url(#volumeGradient)" stroke="var(--primary)" stroke-width="0.5"/>`;
+                    }).join('')}
+                </svg>
+            `;
+        }
+
+        // Activity Calendar
+        State.renderActivityCalendar();
+    },
+
+    calculate1RM: () => {
+        const weight = parseFloat(document.getElementById('calc-weight').value);
+        const reps = parseInt(document.getElementById('calc-reps').value);
+
+        if (weight && reps && reps < 30) {
+            const epley = Utils.format1RM(weight, reps, 'epley');
+            const brzycki = Utils.format1RM(weight, reps, 'brzycki');
+
+            document.getElementById('1rm-epley').textContent = epley ? `${epley} кг` : '—';
+            document.getElementById('1rm-brzycki').textContent = brzycki ? `${brzycki} кг` : '—';
+        }
+    },
+
+    renderActivityCalendar: () => {
+        const calendarDiv = document.getElementById('activity-calendar');
+        const history = Store.getHistory();
+        const activityDays = {};
+
+        history.forEach(w => {
+            const day = new Date(w.startTime).toLocaleDateString();
+            activityDays[day] = true;
+        });
+
+        const today = new Date();
+        let html = `<div style="display: grid; grid-template-columns: repeat(7, 1fr); gap: 8px;">`;
+
+        for (let i = 27; i >= 0; i--) {
+            const date = new Date();
+            date.setDate(date.getDate() - i);
+            const dateStr = date.toLocaleDateString();
+            const hasActivity = activityDays[dateStr];
+            const day = date.getDate();
+            const dayOfWeek = date.getDay();
+
+            html += `
+                <div style="width: 100%; aspect-ratio: 1; 
+                    background: ${hasActivity ? 'rgba(212, 175, 55, 0.2)' : 'var(--bg-input)'}; 
+                    border: 1px solid ${hasActivity ? 'var(--primary)' : 'var(--border)'}; 
+                    border-radius: var(--radius-sm); 
+                    display: flex; align-items: center; justify-content: center;
+                    font-size: 0.7rem; color: var(--text-muted);"
+                    title="${dateStr}">
+                    ${day}
+                </div>
+            `;
+        }
+        html += `</div>`;
+
+        calendarDiv.innerHTML = html;
+    }
+};
+
+/* ═════════════════════════════════════════════════════════════════════════ */
+/* TIMER MANAGEMENT */
+/* ═════════════════════════════════════════════════════════════════════════ */
+
+const Timer = (() => {
+    let restInterval = null;
+    let sessionInterval = null;
+
+    return {
+        startRest: (seconds) => {
+            let remaining = seconds;
+            const timerEl = document.getElementById('rest-timer');
+            const valEl = document.getElementById('rest-val');
+
+            timerEl.style.display = 'flex';
+            clearInterval(restInterval);
+
+            const update = () => {
+                const min = Math.floor(remaining / 60);
+                const sec = remaining % 60;
+                valEl.textContent = `${String(min).padStart(2, '0')}:${String(sec).padStart(2, '0')}`;
+
+                if (remaining <= 0) {
+                    Timer.stopRest();
+                    Utils.haptic('success');
+                    return;
+                }
+                remaining--;
+            };
+
+            update();
+            restInterval = setInterval(update, 1000);
+        },
+
+        stopRest: () => {
+            clearInterval(restInterval);
+            document.getElementById('rest-timer').style.display = 'none';
+        },
+
+        startSession: () => {
+            const startTime = Store.getWorkout()?.startTime || Date.now();
+            const timerEl = document.getElementById('session-timer');
+
+            timerEl.style.display = 'block';
+            clearInterval(sessionInterval);
+
+            sessionInterval = setInterval(() => {
+                const elapsed = Date.now() - startTime;
+                timerEl.textContent = Utils.formatTime(elapsed);
+            }, 1000);
+        },
+
+        stopSession: () => {
+            clearInterval(sessionInterval);
+        }
+    };
+})();
+
+/* ═════════════════════════════════════════════════════════════════════════ */
+/* WORKOUT SCREEN MANAGEMENT */
+/* ═════════════════════════════════════════════════════════════════════════ */
+
+const Workout = {
+    init: () => {
+        const workout = Store.getWorkout();
+        if (workout) {
+            document.getElementById('workout-title').value = workout.name;
+            UI.renderExerciseList();
+            Timer.startSession();
+        }
+    }
+};
+
+/* ═════════════════════════════════════════════════════════════════════════ */
+/* ROUTER */
+/* ═════════════════════════════════════════════════════════════════════════ */
+
+const Router = {
+    go: (screenId) => {
+        document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+        document.getElementById(screenId).classList.add('active');
+
+        document.querySelectorAll('.nav-item').forEach(item => {
+            const isActive = item.getAttribute('onclick').includes(screenId);
+            item.classList.toggle('active', isActive);
+        });
+
+        // Специальная обработка экранов
+        if (screenId === 'screen-stats') {
+            State.renderStats();
+        } else if (screenId === 'screen-home') {
+            State.renderHome();
+        }
+
+        // Остановка сессионного таймера при выходе с экрана тренировки
+        if (screenId !== 'screen-workout') {
+            Timer.stopSession();
+        }
+    }
+};
+
+/* ═════════════════════════════════════════════════════════════════════════ */
+/* INITIALIZATION */
+/* ═════════════════════════════════════════════════════════════════════════ */
+
+window.addEventListener('load', () => {
+    // Загрузка настроек
+    const settings = Store.getSettings();
+    document.getElementById('rest-default').value = settings.restDefault;
+    document.getElementById('rest-default').oninput = (e) => {
+        const val = parseInt(e.target.value);
+        if (val >= 15 && val <= 300) {
+            Store.updateSettings({ restDefault: val });
+        }
+    };
+
+    // Обновление названия тренировки
+    document.getElementById('workout-title').oninput = (e) => {
+        const workout = Store.getWorkout();
+        if (workout) {
+            workout.name = e.target.value;
+            Store.updateCurrentWorkout({ name: e.target.value });
+        }
+    };
+
+    // Инициализация домашнего экрана
+    State.renderHome();
+
+    // Обработка нажатия Escape для закрытия модалей
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') {
+            document.querySelectorAll('.modal-overlay.active').forEach(m => {
+                m.classList.remove('active');
+            });
+        }
+    });
+
+    // Закрытие модали по клику вне содержимого
+    document.querySelectorAll('.modal-overlay').forEach(modal => {
+        modal.addEventListener('click', (e) => {
+            if (e.target === modal) {
+                modal.classList.remove('active');
+            }
+        });
+    });
+
+    Utils.haptic('light');
+});
+
+// Очистка при выходе
+window.addEventListener('beforeunload', () => {
+    Timer.stopSession();
+    Timer.stopRest();
+});
+</script>
+</body>
+</html>
